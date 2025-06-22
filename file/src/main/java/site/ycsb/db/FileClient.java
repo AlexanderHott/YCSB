@@ -16,11 +16,15 @@ public class FileClient extends DB {
 
   private BufferedWriter writer;
 
+  public static final String FILE_OUTPUT_PROPERTY_KEY = "file.output";
+  public static final String FILE_OUTPUT_DEFAULT = "./workload.txt";
+
   @Override
   public void init() throws DBException {
-    String filename = getProperties().getProperty("file.output", "./output.txt");
+    String filename = getProperties().getProperty(FILE_OUTPUT_PROPERTY_KEY, FILE_OUTPUT_DEFAULT);
+    boolean append = true;
     try {
-      writer = new BufferedWriter(new FileWriter(filename)); // append mode
+      writer = new BufferedWriter(new FileWriter(filename, append)); // append mode
     } catch (IOException e) {
       throw new DBException("Failed to open output file", e);
     }
@@ -38,11 +42,13 @@ public class FileClient extends DB {
     }
   }
 
-  private void writeLine(String line) {
+  private void writeLine(String line)  {
     try {
       writer.write(line);
       writer.newLine();
-    } catch (IOException ignore) {}
+    } catch (IOException e) {
+      System.out.println("Failed to write line: " + line);
+    }
   }
 
   private String formatMap(Map<String, ByteIterator> map) {
