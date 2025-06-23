@@ -70,7 +70,7 @@ public class FileClient extends DB {
   @Override
   public Status read(String table, String key, Set<String> fields,
                      Map<String, ByteIterator> result) {
-    writeLine("P " + table + ":" + key + " " + fields);
+    writeLine("P " + table + ":" + key);
     return Status.OK;
   }
 
@@ -97,7 +97,7 @@ public class FileClient extends DB {
   @Override
   public Status scan(String table, String startkey, int recordcount,
                      Set<String> fields, Vector<HashMap<String, ByteIterator>> result) {
-    writeLine("S " + table + ":" + startkey + " " + recordcount + " fields=" + fields);
+    writeLine("S " + table + ":" + startkey + " " + recordcount);
     return Status.OK;
   }
 }
