@@ -70,34 +70,34 @@ public class FileClient extends DB {
   @Override
   public Status read(String table, String key, Set<String> fields,
                      Map<String, ByteIterator> result) {
-    writeLine("P " + table + " " + key + " " + fields);
+    writeLine("P " + table + ":" + key + " " + fields);
     return Status.OK;
   }
 
   @Override
   public Status insert(String table, String key,
                        Map<String, ByteIterator> values) {
-    writeLine("INSERT " + table + " " + key + " " + formatMap(values));
+    writeLine("I " + table + ":" + key + " " + formatMap(values));
     return Status.OK;
   }
 
   @Override
   public Status delete(String table, String key) {
-    writeLine("DELETE " + table + " " + key);
+    writeLine("D " + table + ":" + key);
     return Status.OK;
   }
 
   @Override
   public Status update(String table, String key,
                        Map<String, ByteIterator> values) {
-    writeLine("UPDATE " + table + " " + key + " " + formatMap(values));
+    writeLine("U " + table + ":" + key + " " + formatMap(values));
     return Status.OK;
   }
 
   @Override
   public Status scan(String table, String startkey, int recordcount,
                      Set<String> fields, Vector<HashMap<String, ByteIterator>> result) {
-    writeLine("SCAN " + table + " from=" + startkey + " count=" + recordcount + " fields=" + fields);
+    writeLine("S " + table + ":" + startkey + " " + recordcount + " fields=" + fields);
     return Status.OK;
   }
 }
